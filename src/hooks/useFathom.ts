@@ -13,7 +13,6 @@ export const useFathom = () => {
 
     // Initialize Fathom when the app loads
     Fathom.load(fathomCode, {
-      url: "https://kiwi.railway.app/script.js",
       includedDomains: [siteURL],
     });
 
