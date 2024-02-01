@@ -1,7 +1,9 @@
 import { NextApiHandler } from "next";
-import { getLayoutAndConfig } from "../../layouts";
 import { z } from "zod";
+
+import { getLayoutAndConfig } from "../../layouts";
 import { renderLayoutToSVG, renderSVGToPNG } from "../../og";
+import { sanitizeHtml } from "../../layouts/utils";
 
 const imageReq = z.object({
   layoutName: z.string(),
@@ -38,7 +40,9 @@ const handler: NextApiHandler = async (req, res) => {
     res.statusCode = 500;
     res.setHeader("Content-Type", "text/html");
     res.end(
-      `<h1>Internal Error</h1><pre><code>${(e as any).message}</code></pre>`,
+      `<h1>Internal Error</h1><pre><code>${sanitizeHtml(
+        (e as any).message,
+      )}</code></pre>`,
     );
     console.error(e);
   }
